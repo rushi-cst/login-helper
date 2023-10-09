@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { handleInputChange, validateInputs, loginUser } from '../utils/loginUtils';
+import { loginUser, validateInputs } from '../utils/loginUtils';
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    phone: ''
+  });
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (event) => {
@@ -21,6 +25,11 @@ const LoginPage = () => {
     } else {
       setErrors({ form: response.message });
     }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
   return (
@@ -44,6 +53,16 @@ const LoginPage = () => {
           onChange={(e) => handleInputChange(e, setFormData)}
         />
         {errors.password && <p>{errors.password}</p>}
+      </div>
+      <div>
+        <label>Phone:</label>
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+        />
+        {errors.phone && <p>{errors.phone}</p>}
       </div>
       <button type="submit">Login</button>
       {errors.form && <p>{errors.form}</p>}
