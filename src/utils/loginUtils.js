@@ -1,5 +1,5 @@
 import { postRequest } from './apiUtils';
-import { isValidEmail, isValidPassword, isValidPhone } from './validationUtils';
+import { isValidEmail, validatePassword, isValidPhone } from './validationUtils';
 
 export const handleInputChange = (event, stateSetter) => {
     const { name, value } = event.target;
@@ -13,8 +13,9 @@ export const validateInputs = ({ email, password, phone }) => {
         errors.email = "Invalid email address";
     }
 
-    if (!isValidPassword(password)) {
-        errors.password = "Password must be at least 8 characters";
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+        errors.password = passwordErrors.join(" ");
     }
 
     if (!isValidPhone(phone)) {

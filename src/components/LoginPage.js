@@ -21,7 +21,6 @@ const LoginPage = () => {
     const response = await loginUser(formData);
     if (response.success) {
       console.log(response.message);
-      // Redirect or set user in context/state, etc.
     } else {
       setErrors({ form: response.message });
     }
